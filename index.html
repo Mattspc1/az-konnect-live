@@ -2,236 +2,282 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>AZ Konnect LIVE — AI-Powered Realtor Calling System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root{--bg:#0a0a0a;--card:#141414;--accent:#00d4ff;--gold:#ffd700;--success:#00ff88;--text:#fff;--muted:#888;--border:#2a2a2a}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:90px}
-        @media(min-width:768px){body{padding-bottom:0}}
-        .container{max-width:1100px;margin:0 auto;padding:0 20px}
-        section{padding:48px 0}
-        h1{font-size:clamp(1.75rem,5vw,3rem);font-weight:700;line-height:1.15}
-        h2{font-size:clamp(1.4rem,4vw,2.25rem);font-weight:700;line-height:1.2}
-        h3{font-size:1.15rem;font-weight:700}
-        p{color:var(--muted)}
-        .accent{color:var(--accent)}
-        .gold{color:var(--gold)}
-        .success{color:var(--success)}
-        
-        header{position:fixed;top:0;left:0;right:0;padding:12px 0;background:rgba(10,10,10,.97);backdrop-filter:blur(10px);z-index:100;border-bottom:1px solid var(--border)}
-        .header-inner{display:flex;justify-content:space-between;align-items:center}
-        .logo{height:32px}
-        @media(min-width:768px){.logo{height:40px}}
-        
-        .btn{display:inline-block;padding:14px 28px;font-size:1rem;font-weight:700;text-decoration:none;border-radius:8px;transition:all .2s;text-align:center;border:none;cursor:pointer}
-        .btn-primary{background:linear-gradient(135deg,#00d4ff,#0099cc);color:#000}
-        .btn-phone{background:var(--success);color:#000}
-        .btn-gold{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
-        .btn-secondary{background:transparent;color:#fff;border:2px solid var(--accent)}
-        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,212,255,.25)}
-        .btn-small{padding:10px 20px;font-size:.85rem}
-        .btn-block{display:block;width:100%}
-        .header-cta{display:none}
-        @media(min-width:768px){.header-cta{display:inline-block}}
-        
-        /* HERO - TIGHTER */
-        .hero{padding:72px 0 32px;text-align:center;background:radial-gradient(ellipse at center top,#1a2a3a,var(--bg) 70%)}
-        @media(min-width:768px){.hero{padding:100px 0 48px}}
-        .hero h1{margin-bottom:16px}
-        .hero-sub{font-size:clamp(.95rem,2.5vw,1.15rem);max-width:640px;margin:0 auto 20px}
-        .hero-cta{display:flex;flex-direction:column;gap:12px;max-width:360px;margin:0 auto}
-        @media(min-width:768px){.hero-cta{flex-direction:row;max-width:540px}.hero-cta .btn{flex:1}}
-        .hero-micro{margin-top:12px;font-size:.8rem;color:var(--muted)}
-        .trust-micro{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:16px;font-size:.75rem;color:var(--muted)}
-        .trust-micro span{display:flex;align-items:center;gap:4px}
-        .trust-micro span::before{content:"✓";color:var(--success);font-size:.7rem}
-        
-        /* 10 SPOTS - ABOVE FOLD URGENCY */
-        .spots-banner{background:linear-gradient(90deg,#1a1500,#2a1f00,#1a1500);border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);padding:16px 0;text-align:center}
-        .spots-banner p{color:var(--gold);font-weight:700;font-size:clamp(1rem,3vw,1.2rem);margin:0}
-        .spots-banner .sub{font-size:.85rem;color:var(--muted);font-weight:400;margin-top:4px}
-        
-        .video-section{background:var(--card);border-bottom:1px solid var(--border);padding:40px 0}
-        .video-section h2,.video-section>div>p{text-align:center}
-        .video-section>div>p{margin-bottom:24px}
-        .video-placeholder{background:#1a1a1a;border:2px dashed var(--border);border-radius:12px;padding:60px 20px;text-align:center;color:var(--muted)}
-        
-        .live-test{text-align:center;background:linear-gradient(180deg,var(--bg),#0d1a1f)}
-        .live-test-card{background:var(--card);border:2px solid var(--success);border-radius:16px;padding:32px 20px;max-width:500px;margin:0 auto}
-        .phone-icon{font-size:2.5rem;margin-bottom:12px}
-        .live-test-card h2{font-size:1.4rem;margin-bottom:12px}
-        .live-test-card>p{margin-bottom:20px;font-size:.95rem}
-        .test-micro{margin-top:14px;font-size:.75rem;color:var(--muted)}
-        
-        .limited-offer{background:linear-gradient(135deg,#1a1500,#0a0a0a);border-top:2px solid var(--gold)}
-        .limited-offer h2,.limited-offer>div>p{text-align:center}
-        .limited-offer>div>p{margin-bottom:24px}
-        .offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:500px;margin:0 auto 24px}
-        .offer-item{display:flex;align-items:center;gap:8px;padding:12px;background:var(--card);border-radius:8px;border:1px solid var(--border);font-size:.9rem}
-        .offer-item::before{content:"✓";color:var(--gold);font-weight:700}
-        .urgency-box{background:rgba(255,215,0,.1);border:1px solid var(--gold);border-radius:8px;padding:16px;text-align:center;max-width:400px;margin:0 auto}
-        .urgency-box p{color:var(--gold);font-weight:600;font-size:.95rem}
-        .urgency-box .sub{font-size:.8rem;margin-top:6px;color:var(--muted)}
-        
-        .exclusivity{background:var(--card)}
-        .exclusivity h2,.exclusivity>div>p{text-align:center}
-        .exclusivity>div>p{margin-bottom:24px}
-        .exclusivity-list{max-width:450px;margin:0 auto}
-        .exclusivity-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);font-size:.95rem}
-        .exclusivity-item:last-child{border-bottom:none}
-        .exclusivity-item::before{content:"→";color:var(--accent);font-weight:700}
-        .exclusivity-note{text-align:center;margin-top:20px;font-style:italic;font-size:.9rem}
-        
-        .features h2{text-align:center;margin-bottom:32px}
-        .features-grid{display:grid;grid-template-columns:1fr;gap:16px}
-        @media(min-width:768px){.features-grid{grid-template-columns:repeat(2,1fr)}}
-        .feature-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-        .feature-card h3{color:var(--accent);margin-bottom:8px;font-size:1rem}
-        .feature-card p{font-size:.9rem}
-        
-        .lead-types{background:var(--card)}
-        .lead-types h2,.lead-types>div>p{text-align:center}
-        .lead-types>div>p{margin-bottom:24px}
-        .lead-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:650px;margin:0 auto 20px}
-        .lead-tag{padding:8px 16px;background:#1a1a1a;border:1px solid var(--border);border-radius:50px;font-size:.85rem}
-        .lead-note{text-align:center;font-weight:600;color:#fff;font-size:.95rem}
-        
-        .qualification h2{text-align:center;margin-bottom:32px}
-        .qual-grid{display:grid;grid-template-columns:1fr;gap:20px}
-        @media(min-width:768px){.qual-grid{grid-template-columns:1fr 1fr}}
-        .qual-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 20px}
-        .qual-card h3{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);font-size:1rem}
-        .qual-card ul{list-style:none}
-        .qual-card li{padding:6px 0;padding-left:20px;position:relative;color:var(--muted);font-size:.9rem}
-        .qual-card li::before{content:"•";position:absolute;left:0;color:var(--accent)}
-        .qual-note{text-align:center;margin-top:24px;font-weight:600;color:var(--success);font-size:1rem}
-        
-        .smart-system{background:linear-gradient(180deg,var(--card),var(--bg))}
-        .smart-system h2,.smart-system>div>p{text-align:center}
-        .smart-system>div>p{margin-bottom:24px;font-style:italic}
-        .smart-list{max-width:550px;margin:0 auto 24px}
-        .smart-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:.9rem}
-        .smart-item:last-child{border-bottom:none}
-        .smart-icon{width:28px;height:28px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#000;font-weight:700;font-size:.85rem}
-        .smart-purpose{text-align:center;font-weight:600;color:var(--accent);font-size:1rem}
-        
-        .dashboards h2,.dashboards>div>p{text-align:center}
-        .dashboards>div>p{margin-bottom:24px}
-        .dashboard-grid{display:grid;grid-template-columns:1fr;gap:20px}
-        @media(min-width:768px){.dashboard-grid{grid-template-columns:repeat(3,1fr)}}
-        .dashboard-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-        .dashboard-card h3{color:var(--accent);margin-bottom:12px;font-size:.9rem;text-transform:uppercase;letter-spacing:1px}
-        .dashboard-card ul{list-style:none}
-        .dashboard-card li{padding:5px 0;color:var(--muted);font-size:.85rem}
-        
-        .how-it-works{background:var(--card)}
-        .how-it-works h2{text-align:center;margin-bottom:32px}
-        .steps{display:grid;grid-template-columns:1fr;gap:20px;max-width:700px;margin:0 auto 24px}
-        @media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr)}}
-        .step{text-align:center;padding:20px}
-        .step-number{width:50px;height:50px;background:linear-gradient(135deg,#00d4ff,#0099cc);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.25rem;font-weight:700;color:#000}
-        .step h3{margin-bottom:6px;font-size:1rem}
-        .step p{font-size:.85rem}
-        .process-note{text-align:center;padding:16px;background:#1a1a1a;border-radius:8px;max-width:600px;margin:0 auto;font-size:.85rem;color:var(--muted)}
-        
-        .pricing{background:linear-gradient(180deg,var(--bg),#0a1520)}
-        .pricing h2{text-align:center;margin-bottom:32px}
-        .pricing-card{background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:32px 24px;max-width:450px;margin:0 auto;text-align:center}
-        .price{font-size:3rem;font-weight:800;color:#fff;margin-bottom:4px}
-        .price-label{color:var(--muted);margin-bottom:24px;font-size:.9rem}
-        .payment-split{background:#1a1a1a;border-radius:8px;padding:16px;margin-bottom:20px}
-        .payment-split p{color:#fff;margin-bottom:6px;font-size:.9rem}
-        .payment-split p:last-child{margin-bottom:0}
-        .guarantee{background:rgba(0,255,136,.1);border:1px solid var(--success);border-radius:8px;padding:16px;margin-bottom:24px}
-        .guarantee h3{color:var(--success);margin-bottom:6px;font-size:.95rem}
-        .guarantee p{font-size:.85rem}
-        .pricing-cta{display:flex;flex-direction:column;gap:10px}
-        .pricing-cta .btn{padding:12px 24px}
-        .cta-trust{margin-top:14px;font-size:.75rem;color:var(--muted);text-align:center}
-        
-        .post-launch{background:var(--card)}
-        .post-launch h2{text-align:center;margin-bottom:32px}
-        .post-grid{display:grid;grid-template-columns:1fr;gap:20px}
-        @media(min-width:768px){.post-grid{grid-template-columns:1fr 1fr}}
-        .post-card{background:#1a1a1a;border:1px solid var(--border);border-radius:12px;padding:24px 20px}
-        .post-card h3{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);font-size:.95rem}
-        .post-card.included h3{color:var(--success)}
-        .post-card.optional h3{color:var(--accent)}
-        .post-card ul{list-style:none}
-        .post-card li{padding:6px 0;padding-left:20px;position:relative;color:var(--muted);font-size:.85rem}
-        .post-card li::before{content:"✓";position:absolute;left:0;color:var(--success)}
-        .post-card.optional li::before{color:var(--accent)}
-        .post-note{text-align:center;margin-top:24px;font-style:italic;color:var(--muted);font-size:.85rem}
-        
-        .social-proof{background:var(--bg);padding:32px 0}
-        .social-proof h3{text-align:center;margin-bottom:24px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px}
-        .logo-slider{overflow:hidden}
-        .logo-track{display:flex;animation:scroll 20s linear infinite}
-        .logo-slide{flex-shrink:0;padding:0 32px}
-        .logo-slide span{font-size:1.1rem;font-weight:600;color:var(--muted);white-space:nowrap}
-        @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-        .social-disclaimer{text-align:center;margin-top:20px;font-size:.7rem;color:var(--muted)}
-        
-        .final-cta{background:linear-gradient(180deg,#0a1520,var(--bg));text-align:center;padding:60px 0}
-        .final-cta h2{margin-bottom:12px}
-        .final-cta>div>p{margin-bottom:32px}
-        .final-cta-buttons{display:flex;flex-direction:column;gap:12px;max-width:360px;margin:0 auto}
-        @media(min-width:600px){.final-cta-buttons{flex-direction:row;max-width:600px}.final-cta-buttons .btn{flex:1}}
-        .final-phone{margin-top:24px}
-        .final-trust{margin-top:16px;font-size:.75rem;color:var(--muted)}
-        
-        footer{background:var(--card);border-top:1px solid var(--border);padding:32px 0;text-align:center}
-        .footer-logo{height:28px;margin-bottom:12px}
-        .footer-tagline{font-size:.85rem;color:var(--muted);margin-bottom:12px}
-        .footer-disclaimer{font-size:.7rem;color:var(--muted);max-width:500px;margin:0 auto}
-        
-        /* STICKY MOBILE BAR - ALWAYS VISIBLE ON MOBILE */
-        .sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.98);backdrop-filter:blur(12px);padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:1000;border-top:1px solid var(--border);box-shadow:0 -4px 20px rgba(0,0,0,.5)}
-        .sticky-bar .btn{flex:1;padding:14px 12px;font-size:.9rem;font-weight:700}
-        .sticky-bar .btn-phone{background:var(--success);color:#000}
-        .sticky-bar .btn-gold{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
-        @media(min-width:768px){.sticky-bar{display:none}}
+        :root {
+            --bg: #0a0a0a;
+            --bg-elevated: #111111;
+            --card: #161616;
+            --card-hover: #1c1c1c;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.15);
+            --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.1);
+            --success: #00ff88;
+            --success-glow: rgba(0, 255, 136, 0.1);
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #606060;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(255, 255, 255, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: calc(88px + env(safe-area-inset-bottom));
+            -webkit-font-smoothing: antialiased;
+        }
+        @media (min-width: 768px) { body { padding-bottom: 0; } }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 56px 0; }
+        @media (min-width: 768px) { section { padding: 72px 0; } }
+
+        h1 { font-size: clamp(1.75rem, 6vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(1.4rem, 4.5vw, 2rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+        h3 { font-size: 1rem; font-weight: 600; }
+        p { color: var(--text-secondary); }
+        .accent { color: var(--accent); }
+        .gold { color: var(--gold); }
+
+        /* Header */
+        header {
+            position: fixed; top: 0; left: 0; right: 0; padding: 14px 0;
+            background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 100; border-bottom: 1px solid var(--border);
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { height: 26px; }
+        @media (min-width: 768px) { .logo { height: 32px; } }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 15px 28px; font-family: inherit; font-size: 0.95rem; font-weight: 600;
+            text-decoration: none; border-radius: 12px; border: none; cursor: pointer;
+            transition: all 0.2s ease; position: relative; overflow: hidden;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-phone {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000; box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+        }
+        .btn-phone:hover { box-shadow: 0 6px 28px rgba(0, 255, 136, 0.4); transform: translateY(-1px); }
+        .btn-gold {
+            background: linear-gradient(135deg, #ffd700, #f0c000);
+            color: #000; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+        .btn-gold:hover { box-shadow: 0 6px 28px rgba(255, 215, 0, 0.4); transform: translateY(-1px); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05); color: var(--text);
+            border: 1px solid var(--border-light);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+        .btn-small { padding: 10px 18px; font-size: 0.85rem; border-radius: 10px; }
+        .btn-block { display: flex; width: 100%; }
+        .header-cta { display: none; }
+        @media (min-width: 768px) { .header-cta { display: inline-flex; } }
+
+        /* Hero */
+        .hero {
+            padding: 88px 0 40px; text-align: center;
+            background: radial-gradient(ellipse 100% 70% at 50% 0%, rgba(0, 212, 255, 0.08), transparent 60%), var(--bg);
+        }
+        @media (min-width: 768px) { .hero { padding: 120px 0 56px; } }
+        .hero h1 { margin-bottom: 16px; }
+        .hero-sub { font-size: clamp(0.95rem, 2.5vw, 1.1rem); max-width: 540px; margin: 0 auto 28px; line-height: 1.7; }
+        .hero-cta { display: flex; flex-direction: column; gap: 12px; max-width: 320px; margin: 0 auto; }
+        @media (min-width: 768px) { .hero-cta { flex-direction: row; max-width: 460px; } .hero-cta .btn { flex: 1; } }
+        .hero-micro { margin-top: 16px; font-size: 0.8rem; color: var(--text-muted); }
+        .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 24px; }
+        .trust-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-secondary); }
+        .trust-item::before { content: "✓"; color: var(--success); font-weight: 600; }
+
+        /* Spots Banner */
+        .spots-banner {
+            background: linear-gradient(90deg, rgba(255,215,0,0.02), rgba(255,215,0,0.06), rgba(255,215,0,0.02));
+            border-top: 1px solid rgba(255,215,0,0.15); border-bottom: 1px solid rgba(255,215,0,0.15);
+            padding: 16px 0; text-align: center;
+        }
+        .spots-banner p { color: var(--gold); font-weight: 600; font-size: 0.95rem; margin: 0; }
+        .spots-banner .sub { font-size: 0.8rem; color: var(--text-muted); font-weight: 400; margin-top: 4px; display: block; }
+        .pulse { display: inline-block; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* Video */
+        .video-section { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .video-section h2, .video-section > div > p { text-align: center; }
+        .video-section > div > p { margin-bottom: 24px; }
+        .video-wrapper { border-radius: 16px; overflow: hidden; background: var(--card); border: 1px solid var(--border); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+        .video-placeholder { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+
+        /* Live Test */
+        .live-test { text-align: center; background: radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0,255,136,0.05), transparent 60%), var(--bg); }
+        .live-test-card {
+            background: var(--card); border: 1px solid rgba(0,255,136,0.3); border-radius: 20px;
+            padding: 36px 24px; max-width: 440px; margin: 0 auto;
+            box-shadow: 0 0 60px rgba(0,255,136,0.08), 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .phone-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .live-test-card h2 { font-size: 1.4rem; margin-bottom: 10px; }
+        .live-test-card > p { margin-bottom: 20px; font-size: 0.95rem; }
+        .test-micro { margin-top: 14px; font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Limited Offer */
+        .limited-offer { background: linear-gradient(180deg, var(--bg), rgba(255,215,0,0.015)); border-top: 1px solid rgba(255,215,0,0.12); }
+        .limited-offer h2, .limited-offer > div > p { text-align: center; }
+        .limited-offer > div > p { margin-bottom: 24px; }
+        .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 380px; margin: 0 auto 24px; }
+        .offer-item { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: var(--card); border-radius: 10px; border: 1px solid var(--border); font-size: 0.85rem; font-weight: 500; }
+        .offer-item::before { content: "✓"; color: var(--gold); font-weight: 700; }
+        .urgency-box { background: var(--gold-glow); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; padding: 16px 20px; text-align: center; max-width: 340px; margin: 0 auto; }
+        .urgency-box p { color: var(--gold); font-weight: 600; font-size: 0.95rem; }
+        .urgency-box .sub { font-size: 0.8rem; margin-top: 4px; color: var(--text-muted); }
+
+        /* Features */
+        .features h2 { text-align: center; margin-bottom: 32px; }
+        .features-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 768px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+        .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: all 0.2s; }
+        .feature-card:hover { background: var(--card-hover); transform: translateY(-2px); }
+        .feature-card h3 { margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .feature-card p { font-size: 0.88rem; }
+
+        /* Lead Types */
+        .lead-types { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .lead-types h2, .lead-types > div > p { text-align: center; }
+        .lead-types > div > p { margin-bottom: 24px; }
+        .lead-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 560px; margin: 0 auto 20px; }
+        .lead-tag { padding: 8px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-secondary); transition: all 0.2s; }
+        .lead-tag:hover { border-color: var(--accent); color: var(--text); }
+        .lead-note { text-align: center; font-weight: 600; color: var(--text); font-size: 0.9rem; }
+
+        /* Qualification */
+        .qualification h2 { text-align: center; margin-bottom: 32px; }
+        .qual-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+        @media (min-width: 768px) { .qual-grid { grid-template-columns: 1fr 1fr; } }
+        .qual-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 20px; }
+        .qual-card h3 { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .qual-card ul { list-style: none; }
+        .qual-card li { padding: 6px 0 6px 20px; position: relative; color: var(--text-secondary); font-size: 0.88rem; }
+        .qual-card li::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+        .qual-note { text-align: center; margin-top: 24px; font-weight: 600; color: var(--success); }
+
+        /* How It Works */
+        .how-it-works { background: var(--bg-elevated); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .how-it-works h2 { text-align: center; margin-bottom: 32px; }
+        .steps { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 640px; margin: 0 auto; }
+        @media (min-width: 768px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+        .step { text-align: center; padding: 24px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; transition: all 0.2s; }
+        .step:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), #0099cc); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 1.25rem; font-weight: 700; color: #000; box-shadow: 0 6px 20px rgba(0,212,255,0.3); }
+        .step h3 { margin-bottom: 6px; }
+        .step p { font-size: 0.85rem; }
+
+        /* Pricing */
+        .pricing { background: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,212,255,0.05), transparent 50%), var(--bg); }
+        .pricing h2 { text-align: center; margin-bottom: 32px; }
+        .pricing-card { background: var(--card); border: 1px solid var(--accent); border-radius: 20px; padding: 36px 24px; max-width: 400px; margin: 0 auto; text-align: center; box-shadow: 0 0 80px rgba(0,212,255,0.06), 0 20px 48px rgba(0,0,0,0.3); }
+        .price { font-size: clamp(2.5rem, 10vw, 3.5rem); font-weight: 800; letter-spacing: -0.02em; }
+        .price-label { color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem; }
+        .payment-split { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .payment-split p { color: var(--text); font-size: 0.9rem; margin-bottom: 6px; }
+        .payment-split p:last-child { margin-bottom: 0; }
+        .guarantee { background: var(--success-glow); border: 1px solid rgba(0,255,136,0.2); border-radius: 12px; padding: 16px; margin-bottom: 24px; }
+        .guarantee h3 { color: var(--success); margin-bottom: 6px; font-size: 0.9rem; }
+        .guarantee p { font-size: 0.82rem; }
+        .pricing-cta { display: flex; flex-direction: column; gap: 10px; }
+        .cta-trust { margin-top: 16px; font-size: 0.72rem; color: var(--text-muted); display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        .cta-trust span::before { content: "✓"; color: var(--success); margin-right: 4px; }
+
+        /* Social Proof */
+        .social-proof { padding: 40px 0; overflow: hidden; }
+        .social-proof h3 { text-align: center; margin-bottom: 24px; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
+        .logo-slider { mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); }
+        .logo-track { display: flex; animation: scroll 22s linear infinite; }
+        .logo-slide { flex-shrink: 0; padding: 0 32px; }
+        .logo-slide span { font-size: 1rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; opacity: 0.5; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .social-disclaimer { text-align: center; margin-top: 20px; font-size: 0.68rem; color: var(--text-muted); }
+
+        /* Final CTA */
+        .final-cta { background: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(255,215,0,0.04), transparent 50%), var(--bg); text-align: center; padding: 64px 0; }
+        .final-cta h2 { margin-bottom: 12px; }
+        .final-cta > div > p { margin-bottom: 32px; }
+        .final-cta-buttons { display: flex; flex-direction: column; gap: 12px; max-width: 320px; margin: 0 auto; }
+        @media (min-width: 600px) { .final-cta-buttons { flex-direction: row; max-width: 480px; } .final-cta-buttons .btn { flex: 1; } }
+        .final-phone { margin-top: 24px; }
+        .final-trust { margin-top: 20px; font-size: 0.75rem; color: var(--text-muted); display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+
+        /* Footer */
+        footer { background: var(--bg-elevated); border-top: 1px solid var(--border); padding: 36px 0; text-align: center; }
+        .footer-logo { height: 24px; margin-bottom: 12px; opacity: 0.7; }
+        .footer-tagline { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; }
+        .footer-disclaimer { font-size: 0.68rem; color: var(--text-muted); max-width: 480px; margin: 0 auto; }
+
+        /* Sticky Bar */
+        .sticky-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 12px 16px; padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex; gap: 10px; z-index: 1000;
+            border-top: 1px solid var(--border); box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
+        }
+        .sticky-bar .btn { flex: 1; padding: 14px 12px; font-size: 0.9rem; }
+        @media (min-width: 768px) { .sticky-bar { display: none; } }
     </style>
 </head>
 <body>
     <header>
         <div class="container header-inner">
             <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop,q=95/AVLzWZ0NVXsxMRQV/white-logo-az-konnect-YBg8LXLVl2t4qXo4.png" alt="AZ Konnect" class="logo">
-            <a href="DEPOSIT_LINK_PLACEHOLDER" class="btn btn-primary btn-small header-cta">Reserve Your Spot</a>
+            <a href="DEPOSIT_LINK_PLACEHOLDER" class="btn btn-gold btn-small header-cta">Reserve Spot</a>
         </div>
     </header>
 
     <section class="hero">
         <div class="container">
-            <h1>AI-Powered Calling System That Books Qualified Buyers & Sellers — <span class="accent">Automatically</span></h1>
+            <h1>AI Calling System That Books Qualified Buyers & Sellers — <span class="accent">Automatically</span></h1>
             <p class="hero-sub">Stop chasing leads. Let AI call, qualify, and follow up while you close deals.</p>
             <div class="hero-cta">
                 <a href="tel:DEMO_PHONE_PLACEHOLDER" class="btn btn-phone">📞 Call & Test Live</a>
-                <a href="DEPOSIT_LINK_PLACEHOLDER" class="btn btn-gold">Reserve Spot — $499.50</a>
+                <a href="DEPOSIT_LINK_PLACEHOLDER" class="btn btn-gold">Reserve — $499.50</a>
             </div>
             <p class="hero-micro">Call now. Hang up. Watch instant follow-up hit your phone.</p>
-            <div class="trust-micro">
-                <span>Money-back guarantee</span>
-                <span>No contracts</span>
-                <span>Live in 48 hours</span>
+            <div class="trust-row">
+                <span class="trust-item">Money-back guarantee</span>
+                <span class="trust-item">No contracts</span>
+                <span class="trust-item">Live in 48 hours</span>
             </div>
         </div>
     </section>
 
-    <!-- 10 SPOTS BANNER - ABOVE FOLD -->
     <div class="spots-banner">
         <div class="container">
-            <p>🔥 Only 10 spots include FREE CRM setup — <span class="gold">just a few left</span></p>
-            <p class="sub">After that, CRM is extra. Lock yours now.</p>
+            <p><span class="pulse"></span>Only 10 spots include FREE CRM — <span class="gold">just a few left</span></p>
+            <span class="sub">After that, CRM setup is extra.</span>
         </div>
     </div>
 
     <section class="video-section">
         <div class="container">
             <h2>See it work in 2 minutes ↓</h2>
-            <p>Watch exactly how AZ Konnect LIVE generates conversations.</p>
-            <div class="video-placeholder">DEMO_VIDEO_EMBED_PLACEHOLDER</div>
+            <p>Watch how AZ Konnect LIVE generates conversations.</p>
+            <div class="video-wrapper">
+                <div class="video-placeholder">DEMO_VIDEO_EMBED_PLACEHOLDER</div>
+            </div>
         </div>
     </section>
 
@@ -239,7 +285,7 @@
         <div class="container">
             <div class="live-test-card">
                 <div class="phone-icon">📱</div>
-                <h2>Test It <span class="success">Right Now</span></h2>
+                <h2>Test It <span class="accent">Right Now</span></h2>
                 <p>Call the demo line. Miss it on purpose. Watch the follow-up kick in instantly.</p>
                 <a href="tel:DEMO_PHONE_PLACEHOLDER" class="btn btn-phone btn-block">📞 Call & Test the System</a>
                 <p class="test-micro">No spam. No opt-in. Just proof it works.</p>
@@ -250,7 +296,7 @@
     <section class="limited-offer">
         <div class="container">
             <h2><span class="gold">First 10 Realtors:</span> CRM Included Free</h2>
-            <p>Full CRM setup at no extra cost (if you don't have one).</p>
+            <p>Full CRM setup at no extra cost.</p>
             <div class="offer-grid">
                 <div class="offer-item">CRM included</div>
                 <div class="offer-item">Pipelines ready</div>
@@ -259,21 +305,8 @@
             </div>
             <div class="urgency-box">
                 <p>Only a few spots left.</p>
-                <p class="sub">When they're gone, CRM is not included.</p>
+                <span class="sub">When they're gone, CRM is not included.</span>
             </div>
-        </div>
-    </section>
-
-    <section class="exclusivity">
-        <div class="container">
-            <h2>We don't work with everyone</h2>
-            <p>We only take agents who:</p>
-            <div class="exclusivity-list">
-                <div class="exclusivity-item">Have leads or a database to work</div>
-                <div class="exclusivity-item">Want more buyer/seller conversations</div>
-                <div class="exclusivity-item">Will move fast and follow the process</div>
-            </div>
-            <p class="exclusivity-note">Demand is high. Results are real. We keep it limited.</p>
         </div>
     </section>
 
@@ -281,13 +314,12 @@
         <div class="container">
             <h2>What AZ Konnect LIVE Does</h2>
             <div class="features-grid">
-                <div class="feature-card"><h3>📞 Calls Leads</h3><p>Local numbers so leads actually pick up.</p></div>
-                <div class="feature-card"><h3>💬 Follows Up</h3><p>WhatsApp + SMS + Email — automatically.</p></div>
-                <div class="feature-card"><h3>🔄 Works Any List</h3><p>New, old, cold, "dead" — if it's contacts, we work it.</p></div>
-                <div class="feature-card"><h3>✅ Qualifies Leads</h3><p>Buyers and sellers — built-in questions.</p></div>
-                <div class="feature-card"><h3>📊 Instant Updates</h3><p>Real-time notifications + daily reports.</p></div>
-                <div class="feature-card"><h3>📅 Books Appointments</h3><p>Ready leads go straight to your calendar.</p></div>
-                <div class="feature-card"><h3>🔗 CRM Connected</h3><p>Your CRM — or free setup (first 10 only).</p></div>
+                <div class="feature-card"><h3><span>📞</span> Calls Leads</h3><p>Local numbers so leads actually pick up.</p></div>
+                <div class="feature-card"><h3><span>💬</span> Follows Up</h3><p>WhatsApp + SMS + Email — automatically.</p></div>
+                <div class="feature-card"><h3><span>🔄</span> Works Any List</h3><p>New, old, cold — if it's contacts, we work it.</p></div>
+                <div class="feature-card"><h3><span>✅</span> Qualifies Leads</h3><p>Buyers and sellers — built-in questions.</p></div>
+                <div class="feature-card"><h3><span>📊</span> Instant Updates</h3><p>Real-time notifications + daily reports.</p></div>
+                <div class="feature-card"><h3><span>📅</span> Books Appointments</h3><p>Ready leads go straight to your calendar.</p></div>
             </div>
         </div>
     </section>
@@ -312,7 +344,7 @@
 
     <section class="qualification">
         <div class="container">
-            <h2>Built-In Buyer + Seller Qualification</h2>
+            <h2>Built-In Qualification</h2>
             <div class="qual-grid">
                 <div class="qual-card">
                     <h3>🏠 Buyer Questions</h3>
@@ -339,61 +371,6 @@
         </div>
     </section>
 
-    <section class="smart-system">
-        <div class="container">
-            <h2>Smart System, Not Just Automation</h2>
-            <p>Most tools blast messages. This system thinks:</p>
-            <div class="smart-list">
-                <div class="smart-item"><div class="smart-icon">1</div><p>Remembers prior conversations + objections</p></div>
-                <div class="smart-item"><div class="smart-icon">2</div><p>Follows logic paths based on responses</p></div>
-                <div class="smart-item"><div class="smart-icon">3</div><p>Tags and routes leads automatically</p></div>
-                <div class="smart-item"><div class="smart-icon">4</div><p>Keeps follow-up until clear outcome</p></div>
-                <div class="smart-item"><div class="smart-icon">5</div><p>Tracks what converts and improves</p></div>
-            </div>
-            <p class="smart-purpose">One job: more qualified buyer & seller conversations.</p>
-        </div>
-    </section>
-
-    <section class="dashboards">
-        <div class="container">
-            <h2>Real-Time Updates + Daily Reports</h2>
-            <p>Know instantly when a lead replies, qualifies, or books.</p>
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <h3>Daily Report</h3>
-                    <ul>
-                        <li>Calls placed</li>
-                        <li>Pickups / connects</li>
-                        <li>Conversations started</li>
-                        <li>Qualified buyers</li>
-                        <li>Qualified sellers</li>
-                        <li>Appointments booked</li>
-                    </ul>
-                </div>
-                <div class="dashboard-card">
-                    <h3>Pipeline View</h3>
-                    <ul>
-                        <li>New</li>
-                        <li>→ Contacted</li>
-                        <li>→ Engaged</li>
-                        <li>→ Qualified</li>
-                        <li>→ Booked</li>
-                        <li>→ Closed</li>
-                    </ul>
-                </div>
-                <div class="dashboard-card">
-                    <h3>Performance</h3>
-                    <ul>
-                        <li>Activity</li>
-                        <li>→ Connects</li>
-                        <li>→ Qualified</li>
-                        <li>→ Appointments</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="how-it-works">
         <div class="container">
             <h2>How It Works</h2>
@@ -414,7 +391,6 @@
                     <p>Test before final payment.</p>
                 </div>
             </div>
-            <div class="process-note">End-to-end: call → follow-up → qualification → CRM → appointment → report</div>
         </div>
     </section>
 
@@ -437,37 +413,12 @@
                     <a href="tel:DEMO_PHONE_PLACEHOLDER" class="btn btn-phone btn-block">📞 Call & Test First</a>
                     <a href="CALL_LINK_PLACEHOLDER" class="btn btn-secondary btn-block">Book a Call</a>
                 </div>
-                <p class="cta-trust">✓ Secure payment · ✓ No contracts · ✓ Cancel anytime</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="post-launch">
-        <div class="container">
-            <h2>After You Go LIVE</h2>
-            <div class="post-grid">
-                <div class="post-card included">
-                    <h3>✅ Included: 14 Days Launch Support (Free)</h3>
-                    <ul>
-                        <li>Fix edge cases and bugs</li>
-                        <li>Tune follow-up timing</li>
-                        <li>Improve outcomes from real data</li>
-                        <li>Adjust routing + pipeline</li>
-                        <li>Clean up reports</li>
-                    </ul>
-                </div>
-                <div class="post-card optional">
-                    <h3>Optional: Success Plan — $300/mo</h3>
-                    <ul>
-                        <li>Dedicated Account Manager</li>
-                        <li>Bi-weekly success calls</li>
-                        <li>Daily + weekly reports</li>
-                        <li>Ongoing optimization</li>
-                        <li>Priority support</li>
-                    </ul>
+                <div class="cta-trust">
+                    <span>Secure payment</span>
+                    <span>No contracts</span>
+                    <span>Cancel anytime</span>
                 </div>
             </div>
-            <p class="post-note">No contracts. Cancel anytime. We earn it or we don't.</p>
         </div>
     </section>
 
@@ -505,19 +456,22 @@
             <div class="final-phone">
                 <a href="tel:DEMO_PHONE_PLACEHOLDER" class="btn btn-phone">📞 Call & Test First</a>
             </div>
-            <p class="final-trust">✓ Money-back guarantee · ✓ No contracts · ✓ Live in 48 hours</p>
+            <div class="final-trust">
+                <span>✓ Money-back guarantee</span>
+                <span>✓ No contracts</span>
+                <span>✓ Live in 48 hours</span>
+            </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
             <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,fit=crop,q=95/AVLzWZ0NVXsxMRQV/white-logo-az-konnect-YBg8LXLVl2t4qXo4.png" alt="AZ Konnect" class="footer-logo">
-            <p class="footer-tagline">AZ Konnect LIVE • AI-powered calling + follow-up • Realtor-only</p>
-            <p class="footer-disclaimer">Guarantee covers setup + go-live. Results vary by list quality and responsiveness.</p>
+            <p class="footer-tagline">AZ Konnect LIVE • AI-powered calling + follow-up</p>
+            <p class="footer-disclaimer">Guarantee covers setup + go-live. Results vary by list quality.</p>
         </div>
     </footer>
 
-    <!-- STICKY MOBILE BAR -->
     <div class="sticky-bar">
         <a href="tel:DEMO_PHONE_PLACEHOLDER" class="btn btn-phone">📞 Call & Test</a>
         <a href="DEPOSIT_LINK_PLACEHOLDER" class="btn btn-gold">Reserve Spot</a>
